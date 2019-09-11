@@ -40,7 +40,7 @@ recognition.onresult = (event) => {
     const last = event.results.length - 1;
     const color = event.results[last][0].transcript;
     diagnostic.textContent = 'Result received: ' + color + '.';
-    bg.style.backgroundColor = color;
+    bg.style.backgroundColor = colorMapping[color];
     console.log('Confidence: ' + event.results[0][0].confidence);
 };
 
