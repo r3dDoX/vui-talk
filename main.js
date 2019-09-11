@@ -7,7 +7,7 @@ const colorMapping = {
   beige: 'beige',
   schwarz: 'black',
   blau: 'blue',
-  red: 'red',
+  rot: 'red',
 };
 const colors = Object.keys(colorMapping);
 const grammar = `#JSGF V1.0; grammar colors; public <color> = ${colors.join(' | ')} ;`;
