@@ -1,0 +1,22 @@
+{
+  "name": "vui-talk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r3dDoX/vui-talk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r3dDoX/vui-talk/issues"
+  },
+  "homepage": "https://github.com/r3dDoX/vui-talk#readme",
+  "devDependencies": {
+    "http-server": "0.11.1"
+  }
+}
