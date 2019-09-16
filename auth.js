@@ -1,12 +1,12 @@
-import {apiKey, clientId} from "./secret.js";
+import {apiKey, clientId} from './secret.js';
 
-const SCOPE = 'https://www.googleapis.com/auth/dialogflow';
+const scope = 'https://www.googleapis.com/auth/dialogflow';
 
 let GoogleAuth;
 let authenticatedCallback;
 
 export function whenAuthenticated(callback) {
-  if (GoogleAuth) {
+  if (GoogleAuth && GoogleAuth.currentUser.get().hasGrantedScopes(scope)) {
     callback();
   } else {
     authenticatedCallback = callback;
@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', function () {
     gapi.client.init({
       apiKey,
       clientId,
-      scope: SCOPE,
+      scope,
     })
       .then(function () {
         GoogleAuth = gapi.auth2.getAuthInstance();
-        const isAuthorized = GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE);
+        const isAuthorized = GoogleAuth.currentUser.get().hasGrantedScopes(scope);
         if (isAuthorized && authenticatedCallback) {
           authenticatedCallback();
         }

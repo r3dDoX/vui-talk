@@ -1,43 +1,57 @@
 import './auth.js';
-import {whenAuthenticated} from './auth.js';
+import {uuid} from './uuid.js';
 
-whenAuthenticated(() => {
+const session = uuid();
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('agentInput').addEventListener('keyup', event => {
+    const textBoxValue = event.target.value;
+    if (event.key === 'Enter' && textBoxValue) {
+      addUserMessage(textBoxValue);
+      detectIntent(textBoxValue);
+      event.target.value = '';
+    }
+  });
+});
+
+function addMessage(message, type) {
+  const spanElement = document.createElement('span');
+  spanElement.classList.add('message', `message--${type}`);
+  spanElement.innerText = message;
+  const messagesContainer = document.getElementById('agentMessages');
+  messagesContainer.appendChild(spanElement);
+  messagesContainer.scrollTo(0, messagesContainer.scrollHeight);
+}
+
+function addUserMessage(message) {
+  addMessage(message, 'user');
+}
+
+function addAgentMessage(message) {
+  const regex = /(<([^>]+)>)/ig;
+  addMessage(message.replace(regex, ''), 'agent');
+}
+
+function detectIntent(query) {
   gapi.client
     .request({
-      path: `https://dialogflow.googleapis.com/v2/projects/rodriguez-c4278/agent/sessions/${uuid()}:detectIntent`,
+      path: `https://dialogflow.googleapis.com/v2/projects/rodriguez-c4278/agent/sessions/${session}:detectIntent`,
       method: 'POST',
       body: {
         'queryInput': {
           'text': {
-            'text': 'ja hallo',
+            'text': query,
             'languageCode': 'de',
           },
         },
       },
     })
-    .then(handleResponse, handleError);
-});
+    .then(handleResponse, console.error);
+}
 
 function handleResponse(response) {
-  console.log('onFulfilled', response);
-}
-
-function handleError(error) {
-  console.log('onRejected', error);
-}
-
-// https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-function uuid() {
-  function randomDigit() {
-    if (crypto && crypto.getRandomValues) {
-      var rands = new Uint8Array(1);
-      crypto.getRandomValues(rands);
-      return (rands[0] % 16).toString(16);
-    } else {
-      return ((Math.random() * 16) | 0).toString(16);
-    }
-  }
-
-  var crypto = window.crypto || window.msCrypto;
-  return 'xxxxxxxx-xxxx-4xxx-8xxx-xxxxxxxxxxxx'.replace(/x/g, randomDigit);
+  console.info(response);
+  addAgentMessage(response.result.queryResult.fulfillmentText);
+  const agentReponse = new Audio(`data:audio/mp3;base64,${response.result.outputAudio}`);
+  agentReponse.play();
 }
