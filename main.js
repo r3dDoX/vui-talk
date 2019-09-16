@@ -13,6 +13,19 @@ document.addEventListener('DOMContentLoaded', function () {
       event.target.value = '';
     }
   });
+
+  const speechRecognition = new webkitSpeechRecognition();
+  speechRecognition.lang = 'de-CH';
+
+  speechRecognition.onresult = (event) => {
+    const speechToText = event.results[0][0].transcript;
+    addUserMessage(speechToText);
+    detectIntent(speechToText);
+  };
+
+  document.getElementById('agentMicrophone').addEventListener('click', () => {
+    speechRecognition.start();
+  });
 });
 
 function detectIntent(query) {
