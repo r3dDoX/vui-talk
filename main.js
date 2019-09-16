@@ -1,5 +1,6 @@
 import './auth.js';
 import {uuid} from './uuid.js';
+import {addAgentMessage, addUserMessage} from './messages.js';
 
 const session = uuid();
 
@@ -13,24 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
-
-function addMessage(message, type) {
-  const spanElement = document.createElement('span');
-  spanElement.classList.add('message', `message--${type}`);
-  spanElement.innerText = message;
-  const messagesContainer = document.getElementById('agentMessages');
-  messagesContainer.appendChild(spanElement);
-  messagesContainer.scrollTo(0, messagesContainer.scrollHeight);
-}
-
-function addUserMessage(message) {
-  addMessage(message, 'user');
-}
-
-function addAgentMessage(message) {
-  const regex = /(<([^>]+)>)/ig;
-  addMessage(message.replace(regex, ''), 'agent');
-}
 
 function detectIntent(query) {
   gapi.client
@@ -54,4 +37,22 @@ function handleResponse(response) {
   addAgentMessage(response.result.queryResult.fulfillmentText);
   const agentReponse = new Audio(`data:audio/mp3;base64,${response.result.outputAudio}`);
   agentReponse.play();
+  handleFigureIntents(response.result.queryResult)
+}
+
+function handleFigureIntents(queryResult) {
+  switch (queryResult.intent.displayName) {
+    case '2_HOME Start Figure':
+      console.log('Starte Figur: ', queryResult.parameters.figure);
+      break;
+    case 'IN_ACTION restart':
+      console.log('Starte Figur neu');
+      break;
+    case 'IN_ACTION stop':
+      console.log('Stoppe Figur');
+      break;
+    case 'IN_ACTION leave':
+      console.log('Verlasse Figur');
+      break;
+  }
 }

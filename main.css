@@ -19,6 +19,7 @@ main {
 
 #danceContainer {
     background-color: palevioletred;
+    padding: 10px 15px;
 }
 
 #agentContainer {
@@ -58,6 +59,7 @@ main {
     display: flex;
     padding: 10px;
     background-color: whitesmoke;
+    position: relative;
 }
 
 #agentInput {
@@ -65,5 +67,15 @@ main {
     border: 1px solid silver;
     width: 100%;
     font-size: 2rem;
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
+}
+
+#agentMicrophone {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
