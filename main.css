@@ -104,6 +104,9 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
+    max-height: 100%;
+    max-width: 100%;
+    overflow-y: auto;
     transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
@@ -112,7 +115,7 @@ main {
 }
 
 .dance-video {
-    margin: 30px auto 0;
+    margin: 30px auto 30px;
     display: block;
     max-width: 40vw;
 }
