@@ -57,8 +57,12 @@ function detectIntent(query) {
 function handleResponse(response) {
   console.info(response);
   addAgentMessage(response.result.queryResult.fulfillmentText);
-  const agentReponse = new Audio(`data:audio/mp3;base64,${response.result.outputAudio}`);
-  agentReponse.play();
+  if (window.agentResponse) {
+    agentResponse.pause();
+    delete window.agentResponse;
+  }
+  window.agentResponse = new Audio(`data:audio/mp3;base64,${response.result.outputAudio}`);
+  window.agentResponse.play();
   handleFigureIntents(response.result.queryResult)
 }
 

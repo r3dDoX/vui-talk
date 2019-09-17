@@ -15,7 +15,16 @@ export function addUserMessage(message) {
   addMessage(message, 'user');
 }
 
+function isEmptyOrSpaces(str){
+  return str === null || str.match(/^ *$/) !== null;
+}
+
 export function addAgentMessage(message) {
   const regex = /(<([^>]+)>)/ig;
-  addMessage(message.replace(regex, ''), 'agent');
+  const strippedMessage = message.replace(regex, '');
+  if (isEmptyOrSpaces(strippedMessage)) {
+    addMessage('🎵', 'agent');
+  } else {
+    addMessage(strippedMessage, 'agent');
+  }
 }
