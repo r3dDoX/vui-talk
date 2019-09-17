@@ -18,8 +18,10 @@ main {
 }
 
 #danceContainer {
-    background-color: palevioletred;
+    background-color: lightslategray;
     padding: 10px 15px;
+    box-shadow: inset -5px 0px 10px -2px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 #agentContainer {
@@ -31,16 +33,18 @@ main {
     padding: 10px;
     flex: 1 1 auto;
     overflow-y: auto;
-    background-color: papayawhip;
+    background-color: azure;
     display: flex;
     flex-direction: column;
+    z-index: 1;
 }
 
 .message {
-    margin: 5px 10px;
+    margin: 5px 10px 15px;
     padding: 10px 15px;
     border-radius: 10px;
     font-size: 2rem;
+    box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .message--agent {
@@ -78,4 +82,31 @@ main {
     right: 20px;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+.recording {
+    fill: palevioletred;
+}
+
+.dance-title {
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 20px auto 0;
+    width: 50%;
+    background-color: palevioletred;
+}
+
+.figure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.figure:not(.active) {
+    transform: translateX(100%);
 }

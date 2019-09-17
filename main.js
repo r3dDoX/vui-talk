@@ -17,11 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const speechRecognition = new webkitSpeechRecognition();
   speechRecognition.lang = 'de-CH';
 
-  speechRecognition.onresult = (event) => {
+  speechRecognition.addEventListener('result', (event) => {
     const speechToText = event.results[0][0].transcript;
     addUserMessage(speechToText);
     detectIntent(speechToText);
-  };
+  });
+  speechRecognition.addEventListener('audiostart', () => document.getElementById('agentMicrophone').classList.add('recording'));
+  speechRecognition.addEventListener('audioend', () => document.getElementById('agentMicrophone').classList.remove('recording'));
 
   document.getElementById('agentMicrophone').addEventListener('click', () => {
     speechRecognition.start();
@@ -56,7 +58,8 @@ function handleResponse(response) {
 function handleFigureIntents(queryResult) {
   switch (queryResult.intent.displayName) {
     case '2_HOME Start Figure':
-      console.log('Starte Figur: ', queryResult.parameters.figure);
+      document.querySelectorAll('.figure').forEach(element => element.classList.remove('active'));
+      document.getElementById(`figure${queryResult.parameters.figure.split(' ').join('')}`).classList.add('active');
       break;
     case 'IN_ACTION restart':
       console.log('Starte Figur neu');
@@ -66,6 +69,9 @@ function handleFigureIntents(queryResult) {
       break;
     case 'IN_ACTION leave':
       console.log('Verlasse Figur');
+      break;
+    case 'IN_ACTION continue':
+      console.log('Weiter mit Figur');
       break;
   }
 }
