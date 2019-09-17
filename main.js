@@ -1,6 +1,13 @@
 import './auth.js';
 import {uuid} from './uuid.js';
 import {addAgentMessage, addUserMessage} from './messages.js';
+import {
+  deactivateFigure,
+  pauseCurrentFigure,
+  playCurrentFigure,
+  restartCurrentFigure,
+  showSelectedFigure,
+} from './render.js';
 
 const session = uuid();
 
@@ -58,20 +65,19 @@ function handleResponse(response) {
 function handleFigureIntents(queryResult) {
   switch (queryResult.intent.displayName) {
     case '2_HOME Start Figure':
-      document.querySelectorAll('.figure').forEach(element => element.classList.remove('active'));
-      document.getElementById(`figure${queryResult.parameters.figure.split(' ').join('')}`).classList.add('active');
+      showSelectedFigure(queryResult.parameters.figure);
       break;
     case 'IN_ACTION restart':
-      console.log('Starte Figur neu');
+      restartCurrentFigure();
       break;
     case 'IN_ACTION stop':
-      console.log('Stoppe Figur');
+      pauseCurrentFigure();
       break;
     case 'IN_ACTION leave':
-      console.log('Verlasse Figur');
+      deactivateFigure();
       break;
     case 'IN_ACTION continue':
-      console.log('Weiter mit Figur');
+      playCurrentFigure();
       break;
   }
 }

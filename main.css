@@ -110,3 +110,9 @@ main {
 .figure:not(.active) {
     transform: translateX(100%);
 }
+
+.dance-video {
+    margin: 30px auto 0;
+    display: block;
+    max-width: 40vw;
+}
