@@ -23,7 +23,7 @@ export function addAgentMessage(message) {
   const regex = /(<([^>]+)>)/ig;
   const strippedMessage = message.replace(regex, '');
   if (isEmptyOrSpaces(strippedMessage)) {
-    addMessage('🎵', 'agent');
+    addMessage('💃🏾🕺🏼🎶', 'agent');
   } else {
     addMessage(strippedMessage, 'agent');
   }
