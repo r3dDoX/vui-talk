@@ -11,7 +11,7 @@ import {
 
 const session = uuid();
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('agentInput').addEventListener('keyup', event => {
     const textBoxValue = event.target.value;
     if (event.key === 'Enter' && textBoxValue) {
