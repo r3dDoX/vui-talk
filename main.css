@@ -119,3 +119,14 @@ main {
     display: block;
     max-width: 40vw;
 }
+
+.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.home img {
+    max-width: 30vw;
+}
