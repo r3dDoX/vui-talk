@@ -63,6 +63,7 @@ function handleResponse({result}) {
   window.agentResponse = new Audio(`data:audio/mp3;base64,${result.outputAudio}`);
   window.agentResponse.play();
   addAgentMessage(result.queryResult.fulfillmentText);
+  handleFigureIntents(result.queryResult);
 }
 
 function handleFigureIntents(queryResult) {
