@@ -54,16 +54,15 @@ function detectIntent(query) {
     .then(handleResponse, console.error);
 }
 
-function handleResponse(response) {
-  console.info(response);
-  addAgentMessage(response.result.queryResult.fulfillmentText);
+function handleResponse({result}) {
+  console.info(result);
   if (window.agentResponse) {
-    agentResponse.pause();
+    window.agentResponse.pause();
     delete window.agentResponse;
   }
-  window.agentResponse = new Audio(`data:audio/mp3;base64,${response.result.outputAudio}`);
+  window.agentResponse = new Audio(`data:audio/mp3;base64,${result.outputAudio}`);
   window.agentResponse.play();
-  handleFigureIntents(response.result.queryResult)
+  addAgentMessage(result.queryResult.fulfillmentText);
 }
 
 function handleFigureIntents(queryResult) {
