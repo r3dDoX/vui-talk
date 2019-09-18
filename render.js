@@ -2,7 +2,9 @@ export function showSelectedFigure(figureName) {
   document.querySelectorAll('.figure').forEach(element => element.classList.remove('active'));
   const figureContainer = document.getElementById(`figure${(figureName.split(' ').join(''))}`);
   figureContainer.classList.add('active');
-  figureContainer.querySelector('.dance-video').play();
+  const videoElement = getCurrentVideoElement();
+  videoElement.playbackRate = 0.5;
+  setTimeout(() => videoElement.play(), 500);
 }
 
 function getCurrentVideoElement() {
@@ -13,7 +15,7 @@ function getCurrentVideoElement() {
 export function restartCurrentFigure() {
   const videoElement = getCurrentVideoElement();
   videoElement.currentTime = 0;
-  videoElement.play();
+  setTimeout(() => videoElement.play(), 500);
 }
 
 export function pauseCurrentFigure() {
